@@ -27,12 +27,17 @@ Open the PoC in a browser instantly.
 
 <h1>Features</h1>
 
-✅ Interactive Input – The script prompts the user for a target URL, HTTP method, and request body.
-✅ Automatic HTML Generation – A properly formatted CSRF attack form is generated based on user input.
-✅ Local HTTP Server – A Python HTTP server is launched to serve the PoC file.
-✅ Browser Auto-Launch – Opens the PoC automatically in the browser for immediate testing.
-✅ Port Selection – Allows users to specify a custom port for the HTTP server.
-✅ Handles URL-Encoding – Decodes and properly formats URL-encoded request bodies.
+1.<h3>Interactive Input</h3> – The script prompts the user for a target URL, HTTP method, and request body.
+
+2.<h3>Automatic HTML Generation</h3> – A properly formatted CSRF attack form is generated based on user input.
+
+3.<h3>Local HTTP Server</h3> – A Python HTTP server is launched to serve the PoC file.
+
+4.<h3>Browser Auto-Launch</h3> – Opens the PoC automatically in the browser for immediate testing.
+
+5.<h3>Port Selection</h3> – Allows users to specify a custom port for the HTTP server.
+
+6.<h3>Handles URL-Encoding</h3> – Decodes and properly formats URL-encoded request bodies.
 
 
 ---
