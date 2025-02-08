@@ -122,5 +122,5 @@ Generated CSRF PoC Example
 
 <img src=https://github.com/user-attachments/assets/cd18729e-8440-4c96-8ac5-bb8822179b60 onerror=pwnform.gif width=800 />
 
-https://github.com/user-attachments/assets/56def11a-062a-4a33-bc01-45ff4c4721db
+<img src=https://github.com/user-attachments/assets/56def11a-062a-4a33-bc01-45ff4c4721db onerror=pwnfid.mp4 width=800 />
 
