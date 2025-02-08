@@ -7,7 +7,7 @@
 <img src=https://github.com/user-attachments/assets/cd18729e-8440-4c96-8ac5-bb8822179b60 onerror=pwnform.gif width=800 />
 
 
-Overview
+<h1>Overview</h1>
 
 PWNForm is an automated Bash script that generates a CSRF (Cross-Site Request Forgery) Proof-of-Concept (PoC) attack form. It allows penetration testers and security researchers to quickly generate PoC exploits that can be used to test web applications for CSRF vulnerabilities.
 
@@ -25,7 +25,7 @@ Open the PoC in a browser instantly.
 
 ---
 
-Features
+<h1>Features</h1>
 
 ✅ Interactive Input – The script prompts the user for a target URL, HTTP method, and request body.
 ✅ Automatic HTML Generation – A properly formatted CSRF attack form is generated based on user input.
@@ -37,7 +37,7 @@ Features
 
 ---
 
-Installation
+<h1>Installation</h1>
 
 Prerequisites
 
@@ -58,7 +58,7 @@ cd PWNForm
 
 ---
 
-Usage
+<h1>Usage</h1>
 
 Basic Usage
 
