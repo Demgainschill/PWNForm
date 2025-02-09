@@ -9,7 +9,7 @@
 
 <h1>Overview</h1>
 
-PWNForm is an automated Bash script that generates a CSRF (Cross-Site Request Forgery) Proof-of-Concept (PoC) attack form. It allows penetration testers and security researchers to quickly generate PoC exploits that can be used to test web applications for CSRF vulnerabilities.
+PWNForm is an automated Bash script that generates a CSRF (Cross-Site Request Forgery) Proof-of-Concept (PoC) attack form. It allows users to generate CSRF PoC exploits that can be used to test web applications for CSRF vulnerabilities (Ex:- By Chaining with XSS in a POST Request).
 
 With PWNForm, you can:
 
@@ -17,7 +17,7 @@ Easily create an interactive CSRF attack form.
 
 Generate an HTML-based PoC that allows parameter modification.
 
-Automatically serve the PoC via a local Python HTTP server.
+Automatically serve the PoC via a local Python HTTP server on the user specified port (defaulting to 8000)
 
 Open the PoC in a browser instantly.
 
@@ -52,14 +52,14 @@ Bash (Linux/macOS/WSL recommended)
 
 Python3 (for the built-in HTTP server)
 
-xdg-open (or equivalent command to open URLs)
+xdg-open (For opening the preferred application for opening html files)
 
 
 Clone the Repository
 
 git clone https://github.com/Demgainschill/PWNForm.git
 cd PWNForm
-
+./pwnform -p 8070
 
 ---
 
@@ -69,7 +69,7 @@ Basic Usage
 
 Run the script with:
 
-./pwnform.sh
+./pwnform.sh  ( Defaults to Port:8000)
 
 OR specify a custom port:
 
@@ -94,18 +94,9 @@ The script will:
 
 Generate a csrf_poc.html file.
 
-Start a local Python HTTP server.
+Start a local Python HTTP server on the user specified port (Default:8000).
 
-Open the PoC in your default browser.
-
-
-Expected Output
-
-Generating CSRF PoC...
-CSRF PoC HTML saved as csrf_poc.html
-Starting Python HTTP server on port 8000...
-PoC available at http://localhost:8000/csrf_poc.html
-
+Opens the PoC in your default browser using xdg-open hosted through python HttpServer Module.
 
 ---
 
